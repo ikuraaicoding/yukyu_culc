@@ -1327,5 +1327,11 @@
   render();
 })();
 </script>
+<script>
+  // PWA: 公開したページ(https)で、オフラインでも開けるようにする。手元のファイル(file://)では何もしない。
+  if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });
+  }
+</script>
 </body>
 </html>
