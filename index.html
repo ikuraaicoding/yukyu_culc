@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%20role%3D%22img%22%20aria-label%3D%22%E6%9C%89%E7%B5%A6%E5%8A%B9%E7%8E%87%E6%8C%87%E6%95%B0%E3%81%AE%E3%83%AD%E3%82%B4%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%234f46e5%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2306b6d4%22%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%22paid%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fbbf24%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f97316%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2228%22%20fill%3D%22url(%23bg)%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2228%22%20width%3D%2288%22%20height%3D%2282%22%20rx%3D%2216%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M20%2044%20a16%2016%200%200%201%2016%20-16%20h56%20a16%2016%200%200%201%2016%2016%20v10%20h-88%20z%22%20fill%3D%22%23c7d2fe%22%2F%3E%3Crect%20x%3D%2240%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%2220%22%20rx%3D%224%22%20fill%3D%22%234338ca%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%2218%22%20width%3D%228%22%20height%3D%2220%22%20rx%3D%224%22%20fill%3D%22%234338ca%22%2F%3E%3Crect%20x%3D%2228%22%20y%3D%2268%22%20width%3D%2272%22%20height%3D%2226%22%20rx%3D%2213%22%20fill%3D%22%23c7d2fe%22%2F%3E%3Crect%20x%3D%2251%22%20y%3D%2268%22%20width%3D%2226%22%20height%3D%2226%22%20rx%3D%229%22%20fill%3D%22url(%23paid)%22%2F%3E%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="有給効率指数">
+<meta name="format-detection" content="telephone=no">
+<title>有給効率指数</title>
+<style>
+
+  :root {
+    --bg: #f4f5f9; --bg-glow: rgba(99,102,241,.12);
+    --card: rgba(255,255,255,.82); --text: #0f172a; --sub: #64748b; --line: rgba(15,23,42,.08);
+    --accent: #4f46e5; --accent2: #06b6d4; --accent-soft: rgba(79,70,229,.10);
+    --sat: #2563eb; --sun: #e11d48;
+    --paid-from: #f59e0b; --paid-to: #f97316; --paid-text: #fff;
+    --off: rgba(79,70,229,.10); --hover: rgba(15,23,42,.05);
+    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 12px 32px -12px rgba(15,23,42,.15);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0e17; --bg-glow: rgba(99,102,241,.18);
+      --card: rgba(22,27,42,.82); --text: #e8ecf5; --sub: #8a94ad; --line: rgba(255,255,255,.08);
+      --accent: #818cf8; --accent2: #22d3ee; --accent-soft: rgba(129,140,248,.14);
+      --sat: #7aa7ff; --sun: #fb7185;
+      --off: rgba(129,140,248,.16); --hover: rgba(255,255,255,.06);
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -16px rgba(0,0,0,.6);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 16px 56px; color: var(--text);
+    background: radial-gradient(900px 420px at 15% -5%, var(--bg-glow), transparent 70%),
+                radial-gradient(700px 380px at 95% 0%, rgba(6,182,212,.10), transparent 70%),
+                var(--bg);
+    background-attachment: fixed;
+    font-family: "Inter", "Hiragino Sans", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h1 {
+    font-size: 2rem; font-weight: 800; letter-spacing: -.02em; margin: 0 0 6px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content;
+  }
+  .lead { color: var(--sub); font-size: .92rem; margin: 0 0 28px; }
+  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  .brand svg { width: 52px; height: 52px; flex: none; filter: drop-shadow(0 8px 16px rgba(79,70,229,.35)); }
+  .brand h1 { margin: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } body { padding-top: 20px; } }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 24px;
+    box-shadow: var(--shadow); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* calendar */
+  .nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .nav strong { font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; }
+  .nav button {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: transparent; color: var(--text); cursor: pointer; font-size: .8rem;
+    transition: background .15s, border-color .15s, transform .15s;
+  }
+  .nav button:hover { background: var(--hover); border-color: var(--accent); transform: scale(1.06); }
+  table.cal { width: 100%; border-collapse: separate; border-spacing: 0 2px; table-layout: fixed; }
+  .cal th { font-size: .68rem; font-weight: 600; letter-spacing: .08em; color: var(--sub); padding: 4px 0 8px; }
+  .cal th:first-child, .cal td:first-child { color: var(--sun); }
+  .cal th:last-child { color: var(--sat); }
+  .cal td { padding: 1px; }
+  .day {
+    width: 100%; aspect-ratio: 1; border: 0; border-radius: 14px; background: transparent;
+    color: inherit; cursor: pointer; font: inherit; font-size: .92rem; font-weight: 500;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    transition: background .15s, transform .12s, box-shadow .15s;
+  }
+  .day small { font-size: .5rem; line-height: 1; opacity: .75; font-weight: 500; }
+  .day.sat { color: var(--sat); } .day.sun, .day.hol { color: var(--sun); }
+  .day:not(:disabled):hover { background: var(--hover); transform: translateY(-1px); }
+  .day.off { background: var(--off); border-radius: 0; }
+  .day.paid {
+    background: linear-gradient(135deg, var(--paid-from), var(--paid-to)); color: var(--paid-text);
+    font-weight: 700; border-radius: 14px; box-shadow: 0 6px 16px -6px rgba(249,115,22,.7);
+  }
+  .day.paid:hover { background: linear-gradient(135deg, var(--paid-from), var(--paid-to)); }
+  .day.today { box-shadow: inset 0 0 0 2px var(--accent); }
+  .day.paid.today { box-shadow: 0 6px 16px -6px rgba(249,115,22,.7), inset 0 0 0 2px #fff; }
+  .day.blank { visibility: hidden; }
+  .day.prehire { opacity: .35; text-decoration: line-through; }
+  .day:disabled { cursor: default; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .legend span {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .72rem; color: var(--sub);
+    padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px;
+  }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
+
+  /* score */
+  .score { text-align: center; padding: 8px 0 4px; }
+  .score .num { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+  .score .num span { font-size: .72rem; font-weight: 600; letter-spacing: .14em; color: var(--sub); }
+  #scoreLabel { margin-bottom: 8px; }
+  .score .num b {
+    font-size: 4.6rem; font-weight: 800; letter-spacing: -.04em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .score .num span:last-child { margin-top: 4px; }
+  .score .rank {
+    display: inline-block; margin-top: 14px; padding: 6px 14px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: .85rem;
+  }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+  .stats > div {
+    padding: 12px 6px; border: 1px solid var(--line); border-radius: 14px;
+    color: var(--sub); font-size: .66rem; line-height: 1.35;
+  }
+  .stats b { display: block; color: var(--text); font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 2px; }
+
+  h2 {
+    font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sub); margin: 26px 0 8px;
+  }
+  .block, .rec {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 12px 0; border-top: 1px solid var(--line); font-size: .88rem;
+  }
+  .block small, .rec small { color: var(--sub); display: block; margin-top: 3px; font-size: .74rem; }
+  .block .r { font-weight: 800; font-size: 1.05rem; color: var(--accent); white-space: nowrap; }
+  .empty { color: var(--sub); font-size: .85rem; }
+  .formula { font-size: .78rem; color: var(--sub); line-height: 1.75; margin: 0; }
+
+  .rec { flex-wrap: wrap; }
+  .rec > span { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 200px; }
+  .rec .no {
+    flex: none; width: 26px; height: 26px; border-radius: 50%; margin: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff;
+    font-size: .78rem; font-weight: 800;
+  }
+  .rec button, .actions button {
+    border: 1px solid var(--line); background: transparent; color: var(--text);
+    border-radius: 999px; padding: 8px 16px; cursor: pointer; font: inherit; font-size: .8rem; font-weight: 600;
+    transition: all .15s;
+  }
+  .rec button:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-1px); }
+  .fields { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 4px; }
+  .fields label { display: flex; flex-direction: column; gap: 6px; font-size: .72rem; font-weight: 600; letter-spacing: .08em; color: var(--sub); }
+  .fields input {
+    font: inherit; font-size: 1rem; font-weight: 600; letter-spacing: 0; color: var(--text);
+    background: transparent; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; min-width: 160px;
+    color-scheme: light dark; transition: border-color .15s, box-shadow .15s;
+  }
+  .fields select {
+    font: inherit; font-size: .9rem; font-weight: 600; letter-spacing: 0; color: var(--text);
+    background: transparent; border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; max-width: 100%;
+    color-scheme: light dark;
+  }
+  .fields select option { color: #0f172a; }
+  .fields select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .fields label.chk { flex-direction: row; align-items: center; gap: 8px; align-self: flex-end; padding-bottom: 12px; font-size: .78rem; letter-spacing: 0; cursor: pointer; }
+  .fields label.chk input { min-width: 0; width: 16px; height: 16px; padding: 0; accent-color: var(--accent); }
+  .fields input:disabled { opacity: .5; cursor: not-allowed; }
+  .fields input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); font-size: .8rem; font-weight: 600; }
+  .chip button { width: 22px; height: 22px; border-radius: 50%; border: 0; cursor: pointer; line-height: 1;
+    background: transparent; color: inherit; font-size: .95rem; }
+  .chip button:hover { background: var(--accent); color: #fff; }
+  .fields .btn { align-self: flex-end; border: 1px solid var(--line); background: transparent; color: var(--text);
+    border-radius: 999px; padding: 10px 18px; cursor: pointer; font: inherit; font-size: .85rem; font-weight: 600; transition: all .15s; }
+  .fields .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .err { color: var(--sun); font-size: .8rem; min-height: 1.2em; margin: 8px 0 0; }
+  /* 価値スコアのランク(S/A/B/C/D)ごとの色 */
+  .tier-s { --tc: #d97706; --tc2: #ec4899; --tbg: rgba(245,158,11,.16); }
+  .tier-a { --tc: #059669; --tc2: #10b981; --tbg: rgba(16,185,129,.14); }
+  .tier-b { --tc: #2563eb; --tc2: #06b6d4; --tbg: rgba(37,99,235,.12); }
+  .tier-c { --tc: #7c3aed; --tc2: #a78bfa; --tbg: rgba(124,58,237,.12); }
+  .tier-d { --tc: #64748b; --tc2: #94a3b8; --tbg: rgba(100,116,139,.15); }
+  @media (prefers-color-scheme: dark) {
+    .tier-s { --tc: #fbbf24; --tc2: #f472b6; }
+    .tier-a { --tc: #34d399; --tc2: #10b981; }
+    .tier-b { --tc: #60a5fa; --tc2: #22d3ee; }
+    .tier-c { --tc: #a78bfa; --tc2: #c4b5fd; }
+    .tier-d { --tc: #94a3b8; --tc2: #cbd5e1; }
+  }
+  .score[class*="tier-"] .num b { background: linear-gradient(135deg, var(--tc), var(--tc2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .score[class*="tier-"] .rank { background: var(--tbg); color: var(--tc); }
+  .tier-badge { display: inline-flex; align-items: center; justify-content: center; width: 1.7em; height: 1.7em; margin-right: 8px;
+    border-radius: 50%; background: linear-gradient(135deg, var(--tc), var(--tc2)); color: #fff; font-weight: 800; font-size: .85em; }
+  .block .r[class*="tier-"], .tv { color: var(--tc); font-weight: 700; }
+  .day.paid[class*="tier-"], .day.paid[class*="tier-"]:hover { background: linear-gradient(135deg, var(--tc), var(--tc2)); box-shadow: 0 6px 16px -6px var(--tc); }
+  .day small.pt { font-size: .66rem; font-weight: 800; opacity: 1; color: var(--tc); }
+  .day.paid small.pt { color: #fff; }
+  .day.paid.grp { outline: 2px dashed rgba(255,255,255,.85); outline-offset: -5px; }
+  .block[data-f] { cursor: pointer; border-radius: 10px; transition: background .15s; }
+  .block[data-f]:hover { background: var(--hover); }
+  .block.focus { background: var(--tbg); box-shadow: inset 3px 0 0 var(--tc); padding-left: 12px; padding-right: 8px; }
+  .grpx { border: 1px solid var(--line); background: transparent; color: var(--sub); border-radius: 999px;
+    padding: 4px 10px; font: inherit; font-size: .7rem; cursor: pointer; white-space: nowrap; }
+  .grpx:hover { border-color: var(--sun); color: var(--sun); }
+  .day.inrange { box-shadow: inset 0 0 0 2px var(--accent); background: var(--accent-soft); }
+  .day.paid.inrange { box-shadow: inset 0 0 0 2px #fff; }
+  .seg { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .seg .sp { flex: 1; }
+  .seg button { border: 1px solid var(--line); background: transparent; color: var(--text); border-radius: 999px;
+    padding: 6px 14px; font: inherit; font-size: .78rem; font-weight: 600; cursor: pointer; transition: all .15s; }
+  .seg button:hover { border-color: var(--accent); }
+  .seg button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .rangebox { margin-top: 14px; padding: 14px 16px; border: 1px dashed var(--accent); border-radius: 14px; background: var(--accent-soft); }
+  .rangebox .rtitle { font-size: .8rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+  .rgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
+  .rgrid > div { font-size: .62rem; color: var(--sub); line-height: 1.35; }
+  .rgrid b { display: block; font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+  .rgrid b.tv { color: var(--tc); }
+  @media (max-width: 520px) { .rgrid { grid-template-columns: repeat(2, 1fr); } }
+  .tierlegend { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 14px; }
+  .tierlegend span { font-size: .7rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--tbg); color: var(--tc); }
+  /* スマホ向け */
+  html { -webkit-text-size-adjust: 100%; }
+  button, .day, summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .fold summary { cursor: pointer; font-size: .72rem; font-weight: 700; letter-spacing: .14em; color: var(--sub); list-style: none; padding: 4px 0; }
+  .fold summary::-webkit-details-marker { display: none; }
+  .fold summary::before { content: "▸ "; }
+  .fold[open] summary::before { content: "▾ "; }
+  .fold[open] > summary { margin-bottom: 6px; }
+  @media (max-width: 520px) {
+    body { padding: 16px max(12px, env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+    .card { padding: 16px; border-radius: 18px; }
+    h1 { font-size: 1.6rem; }
+    .fields { gap: 12px; }
+    .fields input, .fields select { font-size: 16px; min-width: 0; width: 100%; }   /* 16px未満だと、iPhoneで入力時に画面が拡大される */
+    .fields label { flex: 1 1 100%; }
+    .fields label.chk { flex: 1 1 auto; }
+    .fields .btn { flex: 1 1 auto; }
+    .score .num b { font-size: 4rem; }
+    .actions { flex-wrap: wrap; }
+    .rec button { width: 100%; }
+    .block .r { font-size: 1rem; }
+  }
+  .tbl { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .82rem; }
+  .tbl th { text-align: left; font-size: .68rem; letter-spacing: .06em; color: var(--sub); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .tbl td { padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .stats.five { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .stats.five > div { padding: 10px 4px; font-size: .62rem; }
+  .stats.five b { font-size: 1.2rem; }
+  @media (max-width: 520px) { .stats.five { grid-template-columns: repeat(3, 1fr); } }
+  .stats.four { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 520px) { .stats.four { grid-template-columns: repeat(2, 1fr); } }
+  .msg { margin-top: 14px; padding: 12px 16px; border-radius: 14px; font-size: .88rem; font-weight: 600;
+    background: var(--accent-soft); color: var(--accent); }
+  .msg.warn { background: rgba(225,29,72,.10); color: var(--sun); }
+  .msg.ok { background: rgba(16,185,129,.12); color: #059669; }
+  .actions { display: flex; gap: 8px; margin-top: 18px; }
+  .actions button:hover { border-color: var(--sun); color: var(--sun); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" aria-hidden="true"><defs><linearGradient id="lgBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset="1" stop-color="#06b6d4"/></linearGradient><linearGradient id="lgPaid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><rect width="128" height="128" rx="28" fill="url(#lgBg)"/><rect x="20" y="28" width="88" height="82" rx="16" fill="#fff"/><path d="M20 44 a16 16 0 0 1 16 -16 h56 a16 16 0 0 1 16 16 v10 h-88 z" fill="#c7d2fe"/><rect x="40" y="18" width="8" height="20" rx="4" fill="#4338ca"/><rect x="80" y="18" width="8" height="20" rx="4" fill="#4338ca"/><rect x="28" y="68" width="72" height="26" rx="13" fill="#c7d2fe"/><rect x="51" y="68" width="26" height="26" rx="9" fill="url(#lgPaid)"/></svg><h1>有給効率指数</h1></div>
+  <p class="lead">有給を取る日をタップすると、連休がどれだけ増幅されたかを計算します。</p>
+
+  <div class="grid">
+    <section class="card">
+      <div class="nav">
+        <button id="prev" aria-label="前の月">◀</button>
+        <strong id="title"></strong>
+        <button id="next" aria-label="次の月">▶</button>
+      </div>
+      <div class="seg" id="modeBar">
+        <button data-mode="day" title="その日を取ったときに増える価値">日ごと</button>
+        <button data-mode="group" title="その日を含む連休の、有給1日あたりの点数">まとまり</button>
+        <span class="sp"></span>
+        <button id="rangeToggle" title="期間を選んで、まとめて評価する">範囲で試す</button>
+      </div>
+      <table class="cal">
+        <thead><tr><th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+      <div class="rangebox" id="rangeBox" style="display:none"></div>
+      <div class="legend">
+        <span><i style="background:linear-gradient(135deg,var(--paid-from),var(--paid-to))"></i>有給(色=ランク)</span>
+        <span><i style="background:var(--off)"></i>連休の一部(休み)</span>
+        <span><i style="border:1px solid var(--accent)"></i>今日</span>
+        <span>日付の下の数字 = 点数(日ごと/まとまりは上のボタンで切り替え)</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="score">
+        <div class="num"><span id="scoreLabel">価値スコア</span><b id="score">-</b><span>点 / 有給1日</span></div>
+        <div class="rank" id="rank">有給を選んでね</div>
+        <div class="tierlegend">
+          <span class="tier-s">S 20点〜</span><span class="tier-a">A 15点〜</span><span class="tier-b">B 10点〜</span><span class="tier-c">C 5点〜</span><span class="tier-d">D 5点未満</span>
+        </div>
+        <div class="stats four">
+          <div><b id="paidCount">0</b>有給日数</div>
+          <div><b id="offCount">0</b>連休の日数</div>
+          <div><b id="stretch">-</b>つなげ度(日/有給1日)</div>
+          <div><b id="ratioTile">-</b>効率指数(倍)</div>
+        </div>
+      </div>
+
+      <h2>連休ごとの内訳</h2>
+      <div id="blocks"><p class="empty">まだ有給が選ばれていません。</p></div>
+
+      <h2 id="groupHead" style="display:none">まとまり(範囲・おすすめ・プランで入れた分)</h2>
+      <div id="groupList"></div>
+
+      <h2>計算方法</h2>
+      <p class="formula">
+        効率指数 = 連休の合計日数 ÷ 使った有給日数<br>
+        連休 = 土日・祝日・有給が途切れず続く期間。<br>
+        例: 金曜に有給1日 → 土日と合わせて3連休 → 3.0倍<br>
+        つなげ度 = (連休の長さ − 有給なしで元々あった最長の休み) ÷ 有給日数<br>
+        例: 火曜が祝日で月曜に有給 → 2連休と1日がつながって4連休 → +2日<br>
+        価値スコア = (連休の価値 − 有給なしで元々あった休みの価値) ÷ 有給日数。連休の価値は短いうちは急に伸び、10日前後で頭打ちになります(3日≒24点・5日≒53点・7日≒77点・10日≒95点)。<br>
+        ※会社独自の休日(年末年始など)は未対応です。
+      </p>
+      <div class="actions"><button id="copyTxt">内訳をコピー</button><button id="saveIcs">カレンダー用(.ics)に保存</button><button id="clear">すべてクリア</button></div>
+    </section>
+  </div>
+
+  <section class="card" style="margin-top:20px">
+    <details class="fold"><summary>会社の休日(年末年始・創立記念日など)</summary>
+    <p class="formula">登録した日は土日祝と同じ「休み」として扱い、指数・おすすめ・使い切りプランに反映します。</p>
+    <div class="fields" style="margin-top:14px">
+      <label>名前(任意)<input type="text" id="compName" placeholder="例: 年末年始" style="min-width:140px"></label>
+      <label>開始日<input type="date" id="compFrom"></label>
+      <label>終了日(1日だけなら空欄)<input type="date" id="compTo"></label>
+      <button class="btn" id="compAdd">追加</button>
+      <button class="btn" id="compPreset">年末年始(12/29〜1/3)を入力</button>
+    </div>
+    <p class="err" id="compErr"></p>
+    <div class="chips" id="companyList"></div>
+    </details>
+  </section>
+
+  <section class="card" style="margin-top:20px">
+    <details class="fold"><summary>会社独自の付与日(前倒し付与・一斉付与など)</summary>
+    <p class="formula">登録すると、入社日からの自動計算の代わりに、ここの付与日と日数で2年消滅を計算します。空のときは法定どおりです。</p>
+    <div class="fields" style="margin-top:14px">
+      <label>付与日<input type="date" id="grantDate"></label>
+      <label>日数<input type="number" id="grantDays" min="1" max="60" step="1" placeholder="例: 10" style="min-width:100px"></label>
+      <button class="btn" id="grantAdd">追加</button>
+      <button class="btn" id="grantAuto">入社日から法定どおり自動入力</button>
+      <button class="btn" id="grantClear">すべて消す</button>
+    </div>
+    <p class="err" id="grantErr"></p>
+    <h2 style="margin:18px 0 6px">初回だけ前倒しする場合(入社日が必要)</h2>
+    <p class="formula">たとえば入社日に10日付与して、2回目以降は法定どおり、という形です。上の「付与日」を登録しているときは、そちらが優先されます。</p>
+    <div class="fields" style="margin-top:12px">
+      <label>前倒しの初回付与日<input type="date" id="fgDate"></label>
+      <label>初回の日数<input type="number" id="fgDays" min="1" max="60" step="1" placeholder="10" style="min-width:100px"></label>
+      <label>2回目以降
+        <select id="fgMode">
+          <option value="legal">法定の日付のまま(入社6か月後+1年ごと)</option>
+          <option value="first">初回付与日から1年ごと</option>
+        </select>
+      </label>
+      <button class="btn" id="fgClear">前倒しをやめる</button>
+    </div>
+    <div class="chips" id="grantList"></div>
+    </details>
+  </section>
+
+  <section class="card plan" style="margin-top:20px">
+    <h2 style="margin-top:0">有給の残りと期限</h2>
+    <div class="fields">
+      <label>残り日数(入社日か付与日があれば自動計算)<input type="number" id="remain" min="0" step="1" inputmode="numeric" placeholder="自動"></label>
+      <label id="manualWrap" class="chk" style="display:none"><input type="checkbox" id="manualRemain"> 手入力にする</label>
+      <label>カレンダーにない取得済み日数<input type="number" id="usedExtra" min="0" step="1" inputmode="numeric" placeholder="0" style="min-width:120px"></label>
+      <label>入社日(法定の付与・2年消滅で計算)<input type="date" id="hire"></label>
+      <label>使い切る期限(入社日を入れたら自動)<input type="date" id="deadline"></label>
+    </div>
+    <div id="planOut"></div>
+  </section>
+
+  <section class="card" style="margin-top:20px">
+    <h2 style="margin-top:0">おすすめの有給日(表示中の月から、期限があれば期限まで・なければ1年先まで)</h2>
+    <p class="formula">休日と休日の間の平日(1〜4日)を有給でつなぐ候補を、「価値スコア(有給1日あたりの価値の増分)」の高い順に並べています。</p>
+    <div id="recs"></div>
+  </section>
+
+  <section class="card" style="margin-top:20px">
+    <details class="fold"><summary>データの書き出し・読み込み(PCとスマホで移すとき)</summary>
+      <p class="formula" style="margin-top:12px">入力した内容(入社日、有給の日、まとまり、会社の休日など)は、使っているブラウザの中にだけ保存されます。PCとスマホでは別々なので、移したいときは、ここで書き出したファイルを、もう一方で読み込んでください。どこにも送信されません。</p>
+      <div class="actions"><button id="dataExport">書き出す</button><button id="dataImport">読み込む</button></div>
+      <input type="file" id="dataFile" accept="application/json,.json" style="display:none">
+      <p class="err" id="dataMsg"></p>
+    </details>
+  </section>
+</div>
+
+<script>
+(() => {
+  const STORE = "yukyu-index-paid-v1";
+
+  // ---------- 日付ユーティリティ ----------
+  const key = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const nthMonday = (y, m, n) => {           // m: 0始まり
+    const first = new Date(y, m, 1).getDay();
+    return 1 + ((8 - first) % 7) + (n - 1) * 7;
+  };
+
+  // ---------- 祝日計算(1980〜2099年) ----------
+  const holCache = {};
+  function holidays(y) {
+    if (holCache[y]) return holCache[y];
+    const map = {};
+    const add = (m, d, name) => { map[key(new Date(y, m, d))] = name; };
+    const base = 0.242194 * (y - 1980) - Math.floor((y - 1980) / 4);
+    add(0, 1, "元日");
+    add(0, nthMonday(y, 0, 2), "成人の日");
+    add(1, 11, "建国記念の日");
+    add(1, 23, "天皇誕生日");
+    add(2, Math.floor(20.8431 + base), "春分の日");
+    add(3, 29, "昭和の日");
+    add(4, 3, "憲法記念日");
+    add(4, 4, "みどりの日");
+    add(4, 5, "こどもの日");
+    add(6, nthMonday(y, 6, 3), "海の日");
+    add(7, 11, "山の日");
+    add(8, nthMonday(y, 8, 3), "敬老の日");
+    add(8, Math.floor(23.2488 + base), "秋分の日");
+    add(9, nthMonday(y, 9, 2), "スポーツの日");
+    add(10, 3, "文化の日");
+    add(10, 23, "勤労感謝の日");
+    // 振替休日(日曜の祝日 → 次の祝日でない日)
+    Object.keys(map).forEach(k => {
+      const [yy, mm, dd] = k.split("-").map(Number);
+      let d = new Date(yy, mm - 1, dd);
+      if (d.getDay() === 0) {
+        d = addDays(d, 1);
+        while (map[key(d)]) d = addDays(d, 1);
+        map[key(d)] = "振替休日";
+      }
+    });
+    // 国民の休日(祝日に挟まれた平日)
+    Object.keys(map).forEach(k => {
+      const [yy, mm, dd] = k.split("-").map(Number);
+      const d = new Date(yy, mm - 1, dd);
+      const mid = addDays(d, 1), next = addDays(d, 2);
+      if (!map[key(mid)] && map[key(next)] && mid.getDay() !== 0) map[key(mid)] = "国民の休日";
+    });
+    return (holCache[y] = map);
+  }
+  const holName = d => holidays(d.getFullYear())[key(d)] || (company.has(key(d)) ? "会社休日" : undefined);
+  const isRestDay = d => d.getDay() === 0 || d.getDay() === 6 || !!holName(d);
+
+  // ---------- 状態 ----------
+  let paid = new Set();
+  try { paid = new Set(JSON.parse(localStorage.getItem(STORE) || "[]")); } catch (e) {}
+  const save = () => { try { localStorage.setItem(STORE, JSON.stringify([...paid])); } catch (e) {} };
+
+  // 会社の休日(期間の配列を保存し、日付の集合に展開して使う)
+  const COMP = "yukyu-index-company-v1";
+  let compRanges = [];
+  try { compRanges = JSON.parse(localStorage.getItem(COMP) || "[]"); if (!Array.isArray(compRanges)) compRanges = []; } catch (e) { compRanges = []; }
+  const saveComp = () => { try { localStorage.setItem(COMP, JSON.stringify(compRanges)); } catch (e) {} };
+  let company = new Set();
+  function rebuildCompany() {
+    company = new Set();
+    compRanges.forEach(r => {
+      const a = parseDate(r.from), b = parseDate(r.to || r.from);
+      if (!a || !b) return;
+      for (let d = a, n = 0; d <= b && n < 400; d = addDays(d, 1), n++) company.add(key(d));
+    });
+  }
+  rebuildCompany();
+
+  const today = new Date();
+  let view = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  // ---------- 連休の計算 ----------
+  // 連休の価値カーブ: 短い連休は急に価値が伸び、10日前後で頭打ちになる(Weibull型)
+  const TAU = 5.8;
+  const V = L => 100 * (1 - Math.exp(-Math.pow(L / TAU, 2)));
+
+  function computeBlocks(set = paid) {
+    if (!set.size) return [];
+    const dates = [...set].map(k => { const [y,m,d] = k.split("-").map(Number); return new Date(y, m-1, d); })
+                           .sort((a, b) => a - b);
+    const start = addDays(dates[0], -20), end = addDays(dates[dates.length - 1], 20);
+    const isOff = d => set.has(key(d)) || isRestDay(d);
+    const blocks = [];
+    let cur = null, nat = 0;
+    for (let d = start; d <= end; d = addDays(d, 1)) {
+      if (isOff(d)) {
+        if (!cur) { cur = { from: d, to: d, len: 0, paid: 0, maxNat: 0, base: 0 }; nat = 0; }
+        cur.to = d; cur.len++;
+        if (set.has(key(d))) { cur.paid++; cur.base += V(nat); nat = 0; }
+        else { nat++; cur.maxNat = Math.max(cur.maxNat, nat); }   // 有給なしで元々あった休みの連続
+      } else if (cur) { cur.base += V(nat); nat = 0; blocks.push(cur); cur = null; }
+    }
+    if (cur) { cur.base += V(nat); blocks.push(cur); }
+    // gain: 有給で増えた価値(連休の価値 − 有給なしで元々あった休みの価値)
+    return blocks.filter(b => b.paid > 0).map(b => { b.gain = V(b.len) - b.base; return b; });
+  }
+
+  // ---------- おすすめ候補(休日と休日の間の平日をつなぐ) ----------
+  function computeRecs() {
+    const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const v0 = new Date(view.getFullYear(), view.getMonth(), 1);
+    let S = v0 > t0 ? v0 : t0;
+    const hd = parseDate(cfg.hire);
+    if (hd && S < hd) S = hd;                       // 入社前に有給は取れない
+    const dl = parseDate(cfg.deadline);
+    const E = dl && dl >= S ? dl : new Date(S.getFullYear() + 1, S.getMonth(), S.getDate());
+    const runs = [];
+    for (let d = addDays(S, -14); d <= addDays(E, 14); d = addDays(d, 1)) {
+      const rest = isRestDay(d), last = runs[runs.length - 1];
+      if (last && last.rest === rest) last.len++;
+      else runs.push({ rest, from: d, len: 1 });
+    }
+    const out = [];
+    for (let i = 1; i < runs.length - 1; i++) {
+      const r = runs[i];
+      if (r.rest || r.len > 4 || !runs[i-1].rest || !runs[i+1].rest) continue;
+      const days = Array.from({ length: r.len }, (_, j) => addDays(r.from, j));
+      if (days[0] < S || days[days.length - 1] > E) continue;
+      if (days.every(d => paid.has(key(d)))) continue;
+      const len = runs[i-1].len + r.len + runs[i+1].len;
+      const stretch = len - Math.max(runs[i-1].len, runs[i+1].len);
+      const ratio = len / r.len, link = stretch / r.len;
+      const val = (V(len) - V(runs[i-1].len) - V(runs[i+1].len)) / r.len;   // 有給1日あたりの価値の増分
+      out.push({ days, len, k: r.len, ratio, link, val, score: val,
+        from: addDays(runs[i-1].from, 0), to: addDays(runs[i+1].from, runs[i+1].len - 1) });
+    }
+    return out.sort((a, b) => b.score - a.score || a.days[0] - b.days[0]).slice(0, 5);
+  }
+
+  function renderRecs() {
+    const box = document.getElementById("recs");
+    const recs = computeRecs();
+    box.innerHTML = "";
+    if (!recs.length) { box.innerHTML = '<p class="empty">候補が見つかりませんでした。</p>'; return; }
+    recs.forEach((c, i) => {
+      const row = document.createElement("div");
+      row.className = "rec";
+      const dayText = c.days.map(fmt).join("・");
+      row.innerHTML = `<span><span class="no">${i+1}</span><span>有給: ${dayText}
+        <small>${fmt(c.from)} 〜 ${fmt(c.to)} の ${c.len}連休 / 有給${c.k}日 ・ 指数 ${c.ratio.toFixed(2)}倍 ・ つなげ度 +${c.link.toFixed(1)}日 ・ ${valTag(c.val)}</small></span></span>`;
+      const btn = document.createElement("button");
+      btn.textContent = "追加して見る";
+      btn.onclick = () => {
+        c.days.forEach(d => paid.add(key(d)));
+        addGroup(c.days.map(key));
+        focusKey = key(c.days[0]);
+        view = new Date(c.days[0].getFullYear(), c.days[0].getMonth(), 1);
+        save(); render();
+      };
+      row.appendChild(btn);
+      box.appendChild(row);
+    });
+  }
+
+  const fmt = d => `${d.getMonth()+1}/${d.getDate()}(${"日月火水木金土"[d.getDay()]})`;
+  // 価値スコア(点/有給1日)のランク。つなぐ取り方で約24点、週まとめ取りで約14点が目安
+  const TIERS = [
+    { min: 20, k: "S", cls: "tier-s", text: "🏆 神ってる!最高の取り方" },
+    { min: 15, k: "A", cls: "tier-a", text: "🌟 とっても効率的!" },
+    { min: 10, k: "B", cls: "tier-b", text: "😊 いい感じ!" },
+    { min: 5, k: "C", cls: "tier-c", text: "🙂 ふつう" },
+    { min: -Infinity, k: "D", cls: "tier-d", text: "🐢 もうちょっと工夫できるかも" }
+  ];
+  const tierOf = v => TIERS.find(t => v >= t.min);
+  // その日の点数(限界価値): 有給にした場合の価値の合計 − 外した場合の価値の合計
+  const gainOf = set => computeBlocks(set).reduce((s, b) => s + b.gain, 0);
+  function dayPoints(k) {
+    const a = new Set(paid), b = new Set(paid);
+    a.add(k); b.delete(k);
+    return gainOf(a) - gainOf(b);
+  }
+  const valTag = v => `<b class="tv ${tierOf(v).cls}">価値 ${v.toFixed(1)}点/日</b>`;
+
+  // ---------- 使い切りプラン(貪欲法) ----------
+  // 残りの日数を使い切るまで、「効率指数 + つなげ度」が最も高い取り方を1つずつ選んでいく。
+  function buildPlan(left, S, E, base = paid) {
+    const used = new Set(base);
+    const picks = [];
+    const inRange = d => d >= S && d <= E;
+    const okDay = d => inRange(d) && !used.has(key(d));
+    let budget = left;
+    while (budget > 0) {
+      const runs = [];
+      for (let d = addDays(S, -14); d <= addDays(E, 14); d = addDays(d, 1)) {
+        const rest = isRestDay(d), last = runs[runs.length - 1];
+        if (last && last.rest === rest) last.len++;
+        else runs.push({ rest, from: d, len: 1 });
+      }
+      let best = null;
+      const consider = c => {
+        if (!best || c.score > best.score || (c.score === best.score && c.days[0] < best.days[0])) best = c;
+      };
+      for (let i = 1; i < runs.length - 1; i++) {
+        const r = runs[i];
+        if (r.rest || !runs[i-1].rest || !runs[i+1].rest) continue;
+        const days = Array.from({ length: r.len }, (_, j) => addDays(r.from, j));
+        const L1 = runs[i-1].len, L2 = runs[i+1].len;
+        // 同じ休日に両側から有給を足すと表示と実際の連休がずれるので、すでに有給が隣接する休日は使わない
+        const free = run => !used.has(key(addDays(run.from, -1))) && !used.has(key(addDays(run.from, run.len)));
+        const f1 = free(runs[i-1]), f2 = free(runs[i+1]);
+        if (r.len <= Math.min(4, budget) && f1 && f2 && days.every(okDay)) {   // 休日と休日をつなぐ
+          const len = L1 + r.len + L2, stretch = len - Math.max(L1, L2);
+          const val = (V(len) - V(L1) - V(L2)) / r.len;
+          consider({ days, k: r.len, len, ratio: len / r.len, link: stretch / r.len, val, score: val });
+        }
+        if (r.len > 1) {                                                // 休日の前後に1日足す
+          if (f1 && okDay(days[0])) consider({ days: [days[0]], k: 1, len: L1 + 1, ratio: L1 + 1, link: 1, val: V(L1 + 1) - V(L1), score: V(L1 + 1) - V(L1) });
+          const ld = days[days.length - 1];
+          if (f2 && okDay(ld)) consider({ days: [ld], k: 1, len: L2 + 1, ratio: L2 + 1, link: 1, val: V(L2 + 1) - V(L2), score: V(L2 + 1) - V(L2) });
+        }
+      }
+      if (!best) {                                                       // 候補がなければ、休みが長くなる平日を選ぶ
+        for (let d = S; d <= E; d = addDays(d, 1)) {
+          if (isRestDay(d) || used.has(key(d))) continue;
+          let len = 1;
+          for (let x = addDays(d, -1); isRestDay(x) || used.has(key(x)); x = addDays(x, -1)) len++;
+          for (let x = addDays(d, 1); isRestDay(x) || used.has(key(x)); x = addDays(x, 1)) len++;
+          if (!best || len > best.len) best = { days: [d], k: 1, len, ratio: len, link: 0, val: V(len) - V(len - 1), score: V(len) - V(len - 1) };
+        }
+        if (!best) break;
+      }
+      best.days.forEach(d => used.add(key(d)));
+      picks.push(best);
+      budget -= best.k;
+    }
+    return picks.sort((a, b) => a.days[0] - b.days[0]);
+  }
+
+  let showPlan = false;
+  function renderAutoPlan(out, left, dl, t0, planFn) {
+    if (!dl || dl < t0 || left <= 0) { showPlan = false; return; }
+    const wrap = document.createElement("div");
+    wrap.style.marginTop = "16px";
+    if (!showPlan) {
+      wrap.innerHTML = '<div class="actions" style="margin-top:0"><button id="mkPlan">使い切りプランを作る</button></div>';
+      out.appendChild(wrap);
+      wrap.querySelector("#mkPlan").onclick = () => { showPlan = true; render(); };
+      return;
+    }
+    const picks = planFn ? planFn() : buildPlan(left, t0, dl);
+    const days = picks.flatMap(p => p.days);
+    const blocks = computeBlocks(new Set([...paid, ...days.map(key)]));
+    const tp = blocks.reduce((s, b) => s + b.paid, 0), to = blocks.reduce((s, b) => s + b.len, 0);
+    const ts = blocks.reduce((s, b) => s + (b.len - b.maxNat), 0);
+    const tg = blocks.reduce((s, b) => s + b.gain, 0);
+    let html = `<h2>使い切りプラン</h2>`;
+    if (days.length < left) html += `<div class="msg warn" style="margin:0 0 8px">期限までに組めたのは${days.length}日分だけで、${left - days.length}日分は入りきらなかったよ。</div>`;
+    picks.forEach(p => {
+      html += `<div class="rec"><span><span>有給: ${p.days[0].getFullYear()}/${p.days.map(fmt).join("・")}
+        <small>${p.len}連休 / 有給${p.k}日 ・ 指数 ${p.ratio.toFixed(2)}倍 ・ つなげ度 +${p.link.toFixed(1)}日 ・ ${valTag(p.val)}</small></span></span></div>`;
+    });
+    if (tp) html += `<div class="msg" style="margin-top:12px">このプランを入れると、全体で 効率指数 ${(to / tp).toFixed(2)}倍 ・ つなげ度 +${(ts / tp).toFixed(1)}日 ・ 価値スコア ${(tg / tp).toFixed(1)}点</div>`;
+    html += `<div class="actions"><button id="applyPlan">カレンダーに反映</button><button id="closePlan">閉じる</button></div>`;
+    wrap.innerHTML = html;
+    out.appendChild(wrap);
+    wrap.querySelector("#applyPlan").onclick = () => {
+      days.forEach(d => paid.add(key(d)));
+      picks.forEach(p => addGroup(p.days.map(key)));
+      if (days.length) focusKey = key(days[0]);
+      if (days.length) view = new Date(days[0].getFullYear(), days[0].getMonth(), 1);
+      showPlan = false; save(); render();
+    };
+    wrap.querySelector("#closePlan").onclick = () => { showPlan = false; render(); };
+  }
+
+  // ---------- 有給の残り・期限 ----------
+  const CFG = "yukyu-index-cfg-v1";
+  let cfg = { remain: "", deadline: "", hire: "" };
+  try { cfg = Object.assign(cfg, JSON.parse(localStorage.getItem(CFG) || "{}")); } catch (e) {}
+  const saveCfg = () => { try { localStorage.setItem(CFG, JSON.stringify(cfg)); } catch (e) {} };
+  // 入社日より前の日か(入社日を入れていなければ、常に false)
+  function beforeHire(d) { const h = parseDate(cfg.hire); return !!h && d < h; }
+  function parseDate(s) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || "");
+    return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+  }
+  // ---------- 法定の付与と2年消滅(労基法39条・115条)で計算 ----------
+  // 付与日数は「週5日勤務・出勤率8割以上」を想定。入社から6か月後に10日、以降は1年ごとに11,12,14,16,18,20日。
+  // 時効は付与日から2年。法律に「使う順番」の決まりはないが、古い付与分から使う運用が一般的なので、そうして計算する。
+  const GRANT_TABLE = [10, 11, 12, 14, 16, 18, 20];
+  // i回目(0始まり)の付与日と日数。初回だけ前倒しする設定(cfg.firstGrant)があれば反映する。
+  //  - 2回目以降を「法定の日付のまま」: 入社6か月後 + 1年ごと(初回だけ早まる)
+  //  - 2回目以降を「初回付与日から1年ごと」: 初回付与日の1年後、2年後…(日数は法定の表どおり)
+  function legalGrant(hire, i) {
+    const fg = parseDate(cfg.firstGrant);
+    const days = GRANT_TABLE[Math.min(i, 6)];
+    if (!fg) return { from: addMonths(hire, 6 + 12 * i), days };
+    if (i === 0) { const fd = Math.floor(Number(cfg.firstDays)); return { from: fg, days: fd >= 1 ? fd : days }; }
+    return cfg.afterMode === "first" ? { from: addMonths(fg, 12 * i), days } : { from: addMonths(hire, 6 + 12 * i), days };
+  }
+  // 会社独自の付与日(登録があれば、法定の自動計算の代わりに使う)
+  function grantList() {
+    if (!Array.isArray(cfg.grants)) return [];
+    return cfg.grants
+      .map(g => ({ from: parseDate(g.from), days: Math.floor(Number(g.days)) }))
+      .filter(g => g.from && g.days > 0)
+      .sort((a, b) => a.from - b.from);
+  }
+  function addMonths(d, n) {
+    const m = d.getMonth() + n, last = new Date(d.getFullYear(), m + 1, 0).getDate();
+    return new Date(d.getFullYear(), m, Math.min(d.getDate(), last));
+  }
+  // remainInput が NaN(空欄)のときは、付与日・今日の日付・カレンダーの過去の有給日から、残り日数を自動計算する
+  function legalState(hire, remainInput, t0) {
+    const active = [], all = []; let next = null;
+    const custom = grantList();
+    const mk = (from, days) => ({ from, days, expiry: addDays(addMonths(from, 24), -1) });
+    if (custom.length) {
+      for (const c of custom) {
+        const b = mk(c.from, c.days);
+        if (c.from > t0) { if (!next) next = b; continue; }
+        all.push(b);
+        if (b.expiry >= t0) active.push(b);
+      }
+    } else {
+      for (let i = 0; i < 80; i++) {
+        const lg = legalGrant(hire, i), b = mk(lg.from, lg.days);
+        if (b.from > t0) { next = b; break; }
+        all.push(b);
+        if (b.expiry >= t0) active.push(b);
+      }
+    }
+    const total = active.reduce((s, b) => s + b.days, 0);
+    const auto = isNaN(remainInput);
+    let usedPast = 0, extra = 0;
+    if (auto) {
+      // 今日より前の有給日は、その日より前に付与されている「今も有効な付与分」から、古い順に使ったものとして数える
+      // (今ある付与日より前の日は、すでに消滅した古い付与分の話なので、数えない)
+      const caps = active.map(b => b.days);
+      [...paid].map(parseDate).filter(d => d < t0).sort((a, b) => a - b).forEach(d => {
+        for (let i = 0; i < active.length; i++) {
+          if (active[i].from <= d && caps[i] > 0) { caps[i]--; usedPast++; break; }
+        }
+      });
+      active.forEach((b, i) => { b.left = caps[i]; });
+      // カレンダーに入れていない取得済みの日数は、有効な付与分の古いほうから引く
+      extra = Math.max(0, Math.floor(Number(cfg.usedExtra) || 0));
+      let rest = extra;
+      active.forEach(b => { const take = Math.min(b.left, rest); b.left -= take; rest -= take; });
+    } else {
+      const remainTotal = Math.min(remainInput, total);
+      let used = total - remainTotal;                     // 古い付与分から使った
+      active.forEach(b => { const take = Math.min(b.days, used); b.left = b.days - take; used -= take; });
+    }
+    const remain = auto ? active.reduce((s, b) => s + b.left, 0) : remainInput;
+    // これから取る予定の有給日も、古い付与分から順に割り当てる
+    const cap = active.map(b => b.left);
+    const allDays = [...paid].map(parseDate);
+    const skipped = { past: allDays.filter(d => d < t0).length, over: 0, late: 0 };   // 計画済みに数えなかった日
+    allDays.filter(d => d >= t0).sort((a, b) => a - b).forEach(d => {
+      let valid = false, done = false;
+      for (let i = 0; i < active.length; i++) {
+        if (active[i].expiry < d) continue;
+        valid = true;
+        if (cap[i] > 0) { cap[i]--; done = true; break; }
+      }
+      if (!done) { if (valid) skipped.over++; else skipped.late++; }
+    });
+    active.forEach((b, i) => { b.need = cap[i]; });
+    return { active, next, total, remain, auto, usedPast, extra, over: auto ? 0 : Math.max(0, remainInput - total), custom: custom.length > 0, skipped };
+  }
+  // 「計画済み」に数えていない有給日があるときの説明
+  function skipNote(s, auto) {
+    const parts = [];
+    if (s.late) parts.push(`期限・有効期限を過ぎた後の日 ${s.late}日(その時には消滅しています)`);
+    if (s.over) parts.push(`残り日数を超えた分 ${s.over}日(次の付与分から使う日です)`);
+    let html = "";
+    if (s.past) html += `<p class="formula" style="margin-top:10px">今日より前の有給 ${s.past}日は「使用済み」として表示しています。これから使える日数には数えません(${auto ? "使った分として、残り日数の自動計算で引いています" : "入力した残り日数に含まれている前提です"})。</p>`;
+    if (parts.length) html += `<p class="formula" style="margin-top:10px">「計画済み」に数えていない有給日: ${parts.join(" / ")}</p>`;
+    return html;
+  }
+  function renderLegal(out, remainInput, hire, t0) {
+    const st = legalState(hire, remainInput, t0);
+    const remain = st.remain;
+    if (!st.active.length) {
+      out.innerHTML = `<div class="msg">まだ有給の付与前です。${st.next ? "最初の付与は " + st.next.from.getFullYear() + "/" + fmt(st.next.from) + "(" + st.next.days + "日)です。" : ""}</div>`;
+      return;
+    }
+    const need = st.active.reduce((s, b) => s + b.need, 0);
+    const risk = st.active.find(b => b.need > 0);
+    const planned = Math.min(remain, st.total) - need;
+    const usedActive = st.total - Math.min(remain, st.total);   // 有効な付与分から使った日数
+    const daysTo = risk ? Math.round((risk.expiry - t0) / 86400000) + 1 : null;
+    const ymd = d => `${d.getFullYear()}/${fmt(d)}`;
+    let msg, cls = "";
+    if (need === 0) { msg = "いま選んでいる計画どおりに使えば、消滅する有給はないよ🎉"; cls = "ok"; }
+    else { msg = `${ymd(risk.expiry)}までにあと${risk.need}日使わないと、その分が消滅するよ。使い切るには合計あと${need}日の計画が必要だよ。`; cls = "warn"; }
+    const rows = st.active.map(b => `<tr><td>${ymd(b.from)}</td><td>${b.days}日</td><td><b>${b.left}日</b></td><td>${ymd(b.expiry)}</td>
+      <td>${b.left === 0 ? "使用済み" : b.need === 0 ? "計画済み" : "あと" + b.need + "日 要計画"}</td></tr>`).join("");
+    out.innerHTML =
+      `<div class="stats five" style="margin-top:16px">
+        <div><b>${remain}</b>残り日数${st.auto ? "(自動計算)" : ""}</div>
+        <div><b>${usedActive}</b>使用済み<br>(有効な付与分)</div>
+        <div><b>${planned}</b>計画済み<br>(これから)</div>
+        <div><b>${need}</b>消滅リスク(日)</div>
+        <div><b>${daysTo === null ? "-" : daysTo}</b>次の失効まで(日)</div>
+      </div>
+      <div class="msg ${cls}">${msg}</div>
+      ${st.auto ? `<p class="formula" style="margin-top:10px">残り日数は自動計算です: 有効な付与の合計 ${st.total}日 − 有効な付与から使った日 ${st.total - remain}日 = ${remain}日(カレンダーの過去の有給 ${st.usedPast}日${st.extra ? " + 入力した取得済み " + st.extra + "日" : ""})。過去に使った日は、カレンダーに入れてね。</p>` : ""}
+      <p class="formula" style="margin-top:10px"><b>消滅リスク ${need}日</b> = 有効な付与 ${st.total}日 − 使用済み ${usedActive}日 − 計画済み ${planned}日${st.auto && st.skipped.past > usedActive - st.extra ? `(カレンダーの過去の有給 ${st.skipped.past}日のうち ${st.skipped.past - (usedActive - st.extra)}日は、今ある付与日より前の日なので(すでに消滅した付与分の話)、今の付与分からは引いていません)` : ""}</p>
+      ${skipNote({ ...st.skipped, past: 0 }, st.auto)}
+      <div style="overflow-x:auto"><table class="tbl"><thead><tr><th>付与日</th><th>付与日数</th><th>推定の残り</th><th>最終有効日</th><th>状態</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${st.next ? `<p class="formula" style="margin-top:10px">次の付与: ${ymd(st.next.from)} に ${st.next.days}日</p>` : ""}
+      ${st.over ? `<div class="msg warn">残り日数が、有効な付与の合計(${st.total}日)より${st.over}日多いよ。繰越や特別休暇など別枠なら、その分は消滅の計算に入れていないよ。</div>` : ""}
+      <p class="formula" style="margin-top:10px">${!st.custom && parseDate(cfg.firstGrant) ? "初回の付与日を前倒しして計算しています。" : ""}${st.custom ? "※登録した会社独自の付与日・日数で計算しています。" : "※週5日勤務・出勤率8割以上の法定日数で計算しています。"}使う順番は法律に決まりがなく、古い付与分から使う運用が一般的なので、そうして計算しています。会社の規定が違う場合は実際と異なります。</p>`;
+    const last = [...st.active].reverse().find(b => b.need > 0);
+    const planFn = () => {
+      const base = new Set(paid), all = [];
+      st.active.forEach(b => {
+        if (b.need <= 0) return;
+        buildPlan(b.need, t0, b.expiry, base).forEach(p => { p.days.forEach(d => base.add(key(d))); all.push(p); });
+      });
+      return all.sort((a, b) => a.days[0] - b.days[0]);
+    };
+    renderAutoPlan(out, need, last ? last.expiry : null, t0, planFn);
+  }
+
+  function renderPlan() {
+    const out = document.getElementById("planOut");
+    const remain = cfg.remain === "" ? NaN : Math.max(0, Math.floor(Number(cfg.remain)));
+    const dl = parseDate(cfg.deadline);
+    const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const hire = parseDate(cfg.hire);
+    // 入社日か付与日があるときは自動計算が標準。手入力にしたときだけ、残り日数の欄が使える
+    const hasGrants = !!(hire || grantList().length);
+    document.getElementById("remain").disabled = hasGrants && !cfg.manual;
+    document.getElementById("manualWrap").style.display = hasGrants ? "" : "none";
+    if (hire || grantList().length) { renderLegal(out, cfg.manual ? remain : NaN, hire, t0); return; }   // 手入力にしていなければ自動計算
+    if (isNaN(remain)) { out.innerHTML = '<div class="msg">残り日数を入れると、計画の進み具合が出るよ。入社日(か付与日)を入れると、残り日数を自動で計算できるよ。</div>'; return; }
+
+    let planned = 0;
+    const skipped = { past: 0, late: 0, over: 0 };
+    paid.forEach(k => {
+      const d = parseDate(k);
+      if (d < t0) skipped.past++;
+      else if (dl && d > dl) skipped.late++;
+      else planned++;
+    });
+    const left = Math.max(0, remain - planned);
+
+    let daysLeft = null, avail = null, msg = "", cls = "";
+    if (dl) {
+      daysLeft = Math.round((dl - t0) / 86400000) + 1;   // 今日を含む
+      avail = 0;
+      for (let d = t0; d <= dl; d = addDays(d, 1)) if (!isRestDay(d) && !paid.has(key(d))) avail++;
+    }
+    if (dl && dl < t0) { msg = "期限が過ぎているよ。期限を更新してね。"; cls = "warn"; }
+    else if (planned > remain) { msg = `残り日数より${planned - remain}日多く選んでいるよ。`; cls = "warn"; }
+    else if (left === 0) { msg = "使い切り計画はバッチリ🎉"; cls = "ok"; }
+    else if (!dl) { msg = `あと${left}日分を計画しよう。期限も入れるとペースが出るよ。`; }
+    else if (left > avail) { msg = `期限までに取れる平日が${avail}日しかなくて、${left - avail}日分足りないよ。期限を延ばすか、先に相談しよう。`; cls = "warn"; }
+    else {
+      const perMonth = left / Math.max(daysLeft / 30.4, 1);
+      msg = `あと${left}日分を計画しよう。期限までのペースは月あたり約${perMonth.toFixed(1)}日だよ。`;
+    }
+    out.innerHTML =
+      `<div class="stats five" style="margin-top:16px">
+        <div><b>${remain}</b>残り日数</div>
+        <div><b>${skipped.past}</b>使用済み<br>(今日より前)</div>
+        <div><b>${planned}</b>計画済み<br>(これから)</div>
+        <div><b>${left}</b>未計画</div>
+        <div><b>${dl && dl >= t0 ? daysLeft : "-"}</b>期限まで(日)${avail !== null && dl >= t0 ? "<br>取れる平日 " + avail + "日" : ""}</div>
+      </div>
+      <div class="msg ${cls}">${msg}</div>
+      ${skipNote(skipped)}`;
+    renderAutoPlan(out, left, dl, t0);
+  }
+  function renderCompany() {
+    const box = document.getElementById("companyList");
+    box.innerHTML = "";
+    if (!compRanges.length) { box.innerHTML = '<p class="empty" style="margin:0">まだ登録されていません。</p>'; return; }
+    compRanges.forEach((r, i) => {
+      const a = parseDate(r.from), b = parseDate(r.to || r.from);
+      if (!a || !b) return;
+      const label = (r.to && r.to !== r.from) ? `${a.getFullYear()}/${fmt(a)}〜${b.getFullYear()}/${fmt(b)}` : `${a.getFullYear()}/${fmt(a)}`;
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = (r.name ? r.name + " " : "") + label;
+      const x = document.createElement("button");
+      x.textContent = "×"; x.setAttribute("aria-label", "削除");
+      x.onclick = () => { compRanges.splice(i, 1); saveComp(); rebuildCompany(); renderCompany(); render(); };
+      chip.appendChild(x);
+      box.appendChild(chip);
+    });
+  }
+  document.getElementById("compAdd").onclick = () => {
+    const err = document.getElementById("compErr");
+    const from = document.getElementById("compFrom").value;
+    const to = document.getElementById("compTo").value || from;
+    const name = document.getElementById("compName").value.trim();
+    const a = parseDate(from), b = parseDate(to);
+    if (!a) { err.textContent = "開始日を入れてね。"; return; }
+    if (b < a) { err.textContent = "終了日は開始日より後にしてね。"; return; }
+    if ((b - a) / 86400000 > 60) { err.textContent = "60日以内の期間で登録してね。"; return; }
+    err.textContent = "";
+    compRanges.push({ name, from, to });
+    saveComp(); rebuildCompany();
+    company.forEach(k => paid.delete(k));     // 休みになった日の有給は外す
+    save();
+    ["compName", "compFrom", "compTo"].forEach(id => { document.getElementById(id).value = ""; });
+    renderCompany(); render();
+  };
+  document.getElementById("compPreset").onclick = () => {
+    const y = today.getMonth() === 0 && today.getDate() <= 3 ? today.getFullYear() - 1 : today.getFullYear();
+    document.getElementById("compName").value = "年末年始";
+    document.getElementById("compFrom").value = `${y}-12-29`;
+    document.getElementById("compTo").value = `${y + 1}-01-03`;
+  };
+  renderCompany();
+
+  // 会社独自の付与日の入力欄
+  function renderGrants() {
+    const box = document.getElementById("grantList");
+    box.innerHTML = "";
+    const gs = (Array.isArray(cfg.grants) ? cfg.grants : []).map((g, i) => ({ g, i, d: parseDate(g.from) })).filter(x => x.d).sort((a, b) => a.d - b.d);
+    if (!gs.length) { box.innerHTML = '<p class="empty" style="margin:0">登録なし(法定どおりで計算します)</p>'; return; }
+    gs.forEach(({ g, i, d }) => {
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = `${d.getFullYear()}/${fmt(d)} に ${g.days}日`;
+      const x = document.createElement("button");
+      x.textContent = "×"; x.setAttribute("aria-label", "削除");
+      x.onclick = () => { cfg.grants.splice(i, 1); saveCfg(); renderGrants(); render(); };
+      chip.appendChild(x);
+      box.appendChild(chip);
+    });
+  }
+  document.getElementById("grantAdd").onclick = () => {
+    const err = document.getElementById("grantErr");
+    const from = document.getElementById("grantDate").value, days = Math.floor(Number(document.getElementById("grantDays").value));
+    if (!parseDate(from)) { err.textContent = "付与日を入れてね。"; return; }
+    if (!(days >= 1 && days <= 60)) { err.textContent = "日数は1〜60で入れてね。"; return; }
+    err.textContent = "";
+    if (!Array.isArray(cfg.grants)) cfg.grants = [];
+    cfg.grants.push({ from, days });
+    saveCfg();
+    document.getElementById("grantDate").value = ""; document.getElementById("grantDays").value = "";
+    renderGrants(); render();
+  };
+  document.getElementById("grantAuto").onclick = () => {
+    const err = document.getElementById("grantErr");
+    const hire = parseDate(cfg.hire);
+    if (!hire) { err.textContent = "先に入社日を入れてね。"; return; }
+    err.textContent = "";
+    const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate()), arr = [];
+    for (let i = 0; i < 80; i++) {
+      const lg = legalGrant(hire, i), g = lg.from, days = lg.days;
+      if (g > t0) { arr.push({ from: key(g), days }); break; }
+      if (addDays(addMonths(g, 24), -1) >= t0) arr.push({ from: key(g), days });
+    }
+    cfg.grants = arr; saveCfg(); renderGrants(); render();
+  };
+  document.getElementById("grantClear").onclick = () => {
+    if (Array.isArray(cfg.grants) && cfg.grants.length && confirm("登録した付与日をすべて消しますか?(法定どおりの計算に戻ります)")) {
+      cfg.grants = []; saveCfg(); renderGrants(); render();
+    }
+  };
+  renderGrants();
+
+  document.getElementById("remain").value = cfg.remain;
+  document.getElementById("deadline").value = cfg.deadline;
+  document.getElementById("manualRemain").checked = !!cfg.manual;
+  document.getElementById("manualRemain").addEventListener("change", e => { cfg.manual = e.target.checked; saveCfg(); render(); });
+  document.getElementById("usedExtra").value = cfg.usedExtra || "";
+  document.getElementById("usedExtra").addEventListener("input", e => { cfg.usedExtra = e.target.value; saveCfg(); render(); });
+  // 初回だけ前倒し
+  document.getElementById("fgDate").value = cfg.firstGrant || "";
+  document.getElementById("fgDays").value = cfg.firstDays || "";
+  document.getElementById("fgMode").value = cfg.afterMode === "first" ? "first" : "legal";
+  document.getElementById("fgDate").addEventListener("change", e => { cfg.firstGrant = e.target.value; saveCfg(); render(); });
+  document.getElementById("fgDays").addEventListener("input", e => { cfg.firstDays = e.target.value; saveCfg(); render(); });
+  document.getElementById("fgMode").addEventListener("change", e => { cfg.afterMode = e.target.value; saveCfg(); render(); });
+  document.getElementById("fgClear").onclick = () => {
+    cfg.firstGrant = ""; cfg.firstDays = ""; cfg.afterMode = "legal";
+    document.getElementById("fgDate").value = ""; document.getElementById("fgDays").value = ""; document.getElementById("fgMode").value = "legal";
+    saveCfg(); render();
+  };
+  document.getElementById("hire").value = cfg.hire || "";
+  document.getElementById("hire").addEventListener("change", e => { cfg.hire = e.target.value; saveCfg(); render(); });
+  document.getElementById("remain").addEventListener("input", e => { cfg.remain = e.target.value; saveCfg(); render(); });
+  document.getElementById("deadline").addEventListener("change", e => { cfg.deadline = e.target.value; saveCfg(); render(); });
+
+  // ---------- まとまり(範囲・おすすめ・プランで入れた複数日を1つの項目として扱う) ----------
+  // paid は今までどおり日付の集合。まとまりは「どの日が同じ項目か」を別に持つ。
+  const GRP_KEY = "yukyu-index-groups-v1";
+  let groups = [];
+  let focusKey = null;   // 大きく点数を出す項目(まとまり or 連休)に含まれる有給日
+  try { groups = JSON.parse(localStorage.getItem(GRP_KEY) || "[]"); if (!Array.isArray(groups)) groups = []; } catch (e) { groups = []; }
+  function addGroup(keys) {
+    if (keys.length < 2) return;
+    groups = groups.map(g => g.filter(k => !keys.includes(k)));   // 別のまとまりに入っていた日は、新しいほうに移す
+    groups.push(keys.slice());
+    try { localStorage.setItem(GRP_KEY, JSON.stringify(groups)); } catch (e) {}
+  }
+  // 有給から外された日を取り除き、途中が抜けたまとまりは2つに分ける。1日だけになったら、ただの有給日に戻る。
+  function normalizeGroups() {
+    const before = JSON.stringify(groups), out = [], seen = new Set();
+    groups.forEach(g => {
+      const days = (Array.isArray(g) ? g : []).filter(k => paid.has(k) && !seen.has(k)).sort();
+      days.forEach(k => seen.add(k));
+      let run = [];
+      const flush = () => { if (run.length >= 2) out.push(run); run = []; };
+      days.forEach(k => {
+        if (run.length) {
+          const a = parseDate(run[run.length - 1]), b = parseDate(k);
+          for (let x = addDays(a, 1); x < b; x = addDays(x, 1)) {
+            if (!isRestDay(x) && !days.includes(key(x))) { flush(); break; }
+          }
+        }
+        run.push(k);
+      });
+      flush();
+    });
+    groups = out;
+    if (JSON.stringify(groups) !== before) { try { localStorage.setItem(GRP_KEY, JSON.stringify(groups)); } catch (e) {} }
+  }
+  // まとまり全体の点数(外したときに価値の合計がどれだけ減るか)
+  function groupStats() {
+    const base = gainOf(paid);
+    return groups.map(keys => {
+      const w = new Set(paid); keys.forEach(k => w.delete(k));
+      const total = base - gainOf(w);
+      return { keys, total, per: total / keys.length };
+    });
+  }
+  function renderGroups(gs, fgi) {
+    const head = document.getElementById("groupHead"), box = document.getElementById("groupList");
+    box.innerHTML = "";
+    head.style.display = gs.length ? "" : "none";
+    const ymd = k => { const d = parseDate(k); return `${d.getFullYear()}/${fmt(d)}`; };
+    gs.forEach((g, i) => {
+      const t = tierOf(g.per);
+      const row = document.createElement("div");
+      row.className = "block " + t.cls + (i === fgi ? " focus" : "");
+      row.dataset.f = "1";
+      row.onclick = () => { focusKey = g.keys[0]; render(); };
+      row.innerHTML = `<span>${ymd(g.keys[0])} 〜 ${ymd(g.keys[g.keys.length - 1])}<br><small style="color:var(--sub)">${g.keys.length}日分のまとまり ・ ${t.k}ランク</small></span>`;
+      const right = document.createElement("span");
+      right.style.cssText = "display:flex;align-items:center;gap:10px";
+      right.innerHTML = `<span class="r ${t.cls}" style="font-size:1.15rem">${g.per.toFixed(1)}点</span>`;
+      const x = document.createElement("button");
+      x.className = "grpx"; x.textContent = "まとめて外す"; x.title = "このまとまりの有給をすべて外す";
+      x.onclick = ev => { ev.stopPropagation(); g.keys.forEach(k => paid.delete(k)); save(); render(); };
+      right.appendChild(x);
+      row.appendChild(right);
+      box.appendChild(row);
+    });
+  }
+
+  // ---------- 表示モード(日ごと/まとまり)と範囲の試し見 ----------
+  const MODE_KEY = "yukyu-index-mode-v1";
+  let scoreMode = "day";
+  try { if (localStorage.getItem(MODE_KEY) === "group") scoreMode = "group"; } catch (e) {}
+  let rangeMode = false, rangeStart = null, rangeEnd = null;
+
+  function groupPoints(d, k) {
+    const a = new Set(paid); a.add(k);
+    const b = computeBlocks(a).find(x => x.from <= d && d <= x.to);
+    return b ? b.gain / b.paid : 0;
+  }
+  // 範囲内で、新しく有給にできる平日
+  function rangeDays() {
+    if (!rangeStart) return [];
+    const end = rangeEnd || rangeStart, out = [];
+    for (let d = rangeStart, n = 0; d <= end && n < 60; d = addDays(d, 1), n++) if (!isRestDay(d) && !beforeHire(d) && !paid.has(key(d))) out.push(d);
+    return out;
+  }
+  function renderRange() {
+    const box = document.getElementById("rangeBox");
+    document.getElementById("rangeToggle").classList.toggle("on", rangeMode);
+    if (!rangeMode) { box.style.display = "none"; box.innerHTML = ""; return; }
+    box.style.display = "block";
+    if (!rangeStart) {
+      box.innerHTML = '<p class="formula" style="margin:0">範囲で試すモード: 開始日と終了日をカレンダーでタップしてね。月をまたいでもOK。1日だけなら開始日だけでもOKだよ。</p>';
+      return;
+    }
+    const end = rangeEnd || rangeStart, ymd = d => `${d.getFullYear()}/${fmt(d)}`;
+    const days = rangeDays();
+    const resetBtn = '<div class="actions" style="margin-top:12px"><button id="rangeReset">選び直す</button></div>';
+    if (!days.length) {
+      box.innerHTML = `<div class="rtitle">${ymd(rangeStart)}〜${ymd(end)}</div><p class="formula" style="margin:0">この範囲に、新しく有給にできる平日がないよ。</p>${resetBtn}`;
+      document.getElementById("rangeReset").onclick = () => { rangeStart = rangeEnd = null; render(); };
+      return;
+    }
+    const pre = new Set([...paid, ...days.map(key)]);
+    const touched = computeBlocks(pre).filter(b => days.some(d => d >= b.from && d <= b.to));
+    const delta = gainOf(pre) - gainOf(paid), per = delta / days.length, t = tierOf(per);
+    const lenSum = touched.reduce((s, b) => s + b.len, 0), paidSum = touched.reduce((s, b) => s + b.paid, 0);
+    box.innerHTML =
+      `<div class="rtitle">範囲の試し見: ${ymd(rangeStart)}〜${ymd(end)}${rangeEnd ? "" : "(終了日をタップ、または1日だけで評価中)"}</div>
+       <div class="rgrid">
+         <div><b>${days.length}日</b>有給にする平日</div>
+         <div><b class="tv ${t.cls}">${per.toFixed(1)}点</b>この期間の点数(${t.k}ランク)</div>
+         <div><b>${Math.max(...touched.map(b => b.len))}日</b>できる連休</div>
+         <div><b>${(lenSum / paidSum).toFixed(2)}倍</b>効率指数</div>
+       </div>
+       <p class="formula" style="margin:10px 0 0">${touched.map(b => `${fmt(b.from)}〜${fmt(b.to)} の${b.len}連休`).join(" / ")}</p>
+       <div class="actions" style="margin-top:12px"><button id="rangeApply">この期間を有給にする</button><button id="rangeReset">選び直す</button></div>`;
+    document.getElementById("rangeApply").onclick = () => {
+      days.forEach(d => paid.add(key(d)));
+      const all = [];                                           // 範囲内の平日すべて(すでに有給の日も含めて1つのまとまりにする)
+      for (let d = rangeStart, n = 0; d <= end && n < 60; d = addDays(d, 1), n++) if (!isRestDay(d) && !beforeHire(d)) all.push(key(d));
+      all.forEach(k => paid.add(k));
+      addGroup(all);
+      if (all.length) focusKey = all[0];
+      rangeStart = rangeEnd = null; save(); render();
+    };
+    document.getElementById("rangeReset").onclick = () => { rangeStart = rangeEnd = null; render(); };
+  }
+
+  // ---------- 描画 ----------
+  function render() {
+    document.getElementById("title").textContent = `${view.getFullYear()}年 ${view.getMonth()+1}月`;
+    // 入社日より前の有給は付与されていないので、あれば外す
+    const hireD = parseDate(cfg.hire);
+    if (hireD) {
+      let changed = false;
+      [...paid].forEach(k => { if (parseDate(k) < hireD) { paid.delete(k); changed = true; } });
+      if (changed) save();
+    }
+    normalizeGroups();
+    const gs = groupStats(), gOf = {};
+    gs.forEach((g, i) => g.keys.forEach(k => { gOf[k] = i; }));
+    const blocks = computeBlocks();
+    const offSet = new Set();
+    const tierMap = {};
+    const rangeDaySet = new Set(rangeDays().map(key));
+    blocks.forEach(b => {
+      const cls = tierOf(b.gain / b.paid).cls;
+      for (let d = b.from; d <= b.to; d = addDays(d, 1)) { offSet.add(key(d)); if (paid.has(key(d))) tierMap[key(d)] = cls; }
+    });
+
+    const tbody = document.getElementById("body");
+    tbody.innerHTML = "";
+    const firstDow = view.getDay();
+    const dim = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    let day = 1 - firstDow;
+    while (day <= dim) {
+      const tr = document.createElement("tr");
+      for (let i = 0; i < 7; i++, day++) {
+        const td = document.createElement("td");
+        const btn = document.createElement("button");
+        btn.className = "day";
+        if (day < 1 || day > dim) { btn.classList.add("blank"); btn.disabled = true; }
+        else {
+          const d = new Date(view.getFullYear(), view.getMonth(), day);
+          const k = key(d), hn = holName(d);
+          btn.textContent = day;
+          if (d.getDay() === 6) btn.classList.add("sat");
+          if (d.getDay() === 0) btn.classList.add("sun");
+          if (hn) { btn.classList.add("hol"); btn.title = hn; const s = document.createElement("small"); s.textContent = hn.slice(0, 4); btn.appendChild(s); }
+          if (offSet.has(k)) btn.classList.add("off");
+          if (paid.has(k)) { btn.classList.add("paid"); if (tierMap[k]) btn.classList.add(tierMap[k]); if (gOf[k] !== undefined) btn.classList.add("grp"); }
+          if (k === key(today)) btn.classList.add("today");
+          if (isRestDay(d) || beforeHire(d)) {         // 休日と、入社前の日は有給にできない
+            btn.disabled = true;
+            if (!isRestDay(d)) { btn.classList.add("prehire"); btn.title = "入社前(有給は付与されません)"; }
+          }
+          else {
+            const grp = scoreMode === "group";
+            // 日ごと: この日を有給にしたときと外したときの、価値の合計の差
+            // まとまり: この日を含む連休が、有給1日あたり何点か
+            const gi = gOf[k];
+            const pts = grp ? (gi !== undefined ? gs[gi].per : groupPoints(d, k)) : dayPoints(k);
+            const ps = document.createElement("small");
+            ps.className = "pt " + tierOf(Math.round(pts)).cls;   // 表示する整数の点数に色を合わせる
+            ps.textContent = Math.round(pts);
+            btn.appendChild(ps);
+            btn.title = grp
+              ? (gi !== undefined
+                  ? `このまとまり(${gs[gi].keys.length}日分)は${pts.toFixed(1)}点`
+                  : `この日を含む連休は、有給1日あたり${pts.toFixed(1)}点`)
+              : `この日の点数: ${pts.toFixed(1)}点(${paid.has(k) ? "外すと" : "取ると"}この分だけ価値が${paid.has(k) ? "減る" : "増える"})`;
+          }
+          if (rangeDaySet.has(k) || (rangeStart && k === key(rangeStart)) || (rangeEnd && k === key(rangeEnd))) btn.classList.add("inrange");
+          if (!isRestDay(d) && !beforeHire(d)) btn.addEventListener("click", () => {
+            if (rangeMode) {                                   // 範囲で試すモード: 開始日→終了日の順に選ぶ
+              if (!rangeStart || rangeEnd) { rangeStart = d; rangeEnd = null; }
+              else if (d < rangeStart) { rangeEnd = rangeStart; rangeStart = d; }
+              else rangeEnd = d;
+              render(); return;
+            }
+            if (paid.has(k)) { paid.delete(k); if (focusKey === k) focusKey = null; }
+            else { paid.add(k); focusKey = k; }
+            save(); render();
+          });
+        }
+        td.appendChild(btn); tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+    }
+
+    renderRecs(); renderPlan(); renderRange();
+    const box = document.getElementById("blocks");
+    if (!blocks.length) {
+      renderGroups(gs, null);
+      document.getElementById("paidCount").textContent = 0;
+      document.getElementById("offCount").textContent = 0;
+      document.getElementById("stretch").textContent = "-";
+      document.getElementById("ratioTile").textContent = "-";
+      document.getElementById("scoreLabel").textContent = "価値スコア";
+      document.getElementById("score").textContent = "-";
+      document.querySelector(".score").className = "score";
+      document.getElementById("rank").textContent = "有給を選んでね";
+      box.innerHTML = '<p class="empty">まだ有給が選ばれていません。</p>';
+      return;
+    }
+
+    // 注目している1つの項目(まとまり or 連休)を決める: 最後に触った日。なければ、今日以降で最初の有給日
+    const blockOf = k => { const d = parseDate(k); return blocks.find(b => b.from <= d && d <= b.to); };
+    let fk = focusKey && paid.has(focusKey) ? focusKey : null;
+    if (!fk) { const ks = [...paid].sort(); fk = ks.find(k => k >= key(today)) || ks[ks.length - 1]; }
+    const fgi = gOf[fk], fblk = blockOf(fk);
+    const unit = fgi !== undefined
+      ? { kind: "まとまり", from: parseDate(gs[fgi].keys[0]), to: parseDate(gs[fgi].keys[gs[fgi].keys.length - 1]), days: gs[fgi].keys.length, score: gs[fgi].per }
+      : { kind: "連休", from: fblk.from, to: fblk.to, days: fblk.paid, score: fblk.gain / fblk.paid };
+    const tier = tierOf(unit.score);
+    document.getElementById("scoreLabel").textContent = `${unit.kind} ${fmt(unit.from)}〜${fmt(unit.to)}(有給${unit.days}日)`;
+    document.getElementById("score").textContent = unit.score.toFixed(1);
+    document.querySelector(".score").className = "score " + tier.cls;
+    document.getElementById("rank").innerHTML = `<span class="tier-badge">${tier.k}</span>${tier.text}`;
+    // 下の4つの数字は、注目している連休のもの
+    document.getElementById("paidCount").textContent = fblk.paid;
+    document.getElementById("offCount").textContent = fblk.len;
+    document.getElementById("stretch").textContent = "+" + ((fblk.len - fblk.maxNat) / fblk.paid).toFixed(1);
+    document.getElementById("ratioTile").textContent = (fblk.len / fblk.paid).toFixed(2);
+
+    renderGroups(gs, fgi);
+    box.innerHTML = "";
+    blocks.forEach(b => {
+      const r = b.len / b.paid;
+      const row = document.createElement("div");
+      row.className = "block " + tierOf(b.gain / b.paid).cls + (b === fblk ? " focus" : "");
+      row.dataset.f = "1";
+      row.onclick = () => {                       // クリックで、その連休の点数を大きく表示する
+        for (let d = b.from; d <= b.to; d = addDays(d, 1)) if (paid.has(key(d))) { focusKey = key(d); break; }
+        render();
+      };
+      row.innerHTML = `<span>${fmt(b.from)} 〜 ${fmt(b.to)}<br><small style="color:var(--sub)">${b.len}連休 / 有給${b.paid}日 ・ 最長の休み ${b.maxNat}日→${b.len}日(+${b.len - b.maxNat}) ・ ${r.toFixed(2)}倍</small></span><span class="r ${tierOf(b.gain / b.paid).cls}">${(b.gain / b.paid).toFixed(1)}点</span>`;
+      box.appendChild(row);
+    });
+  }
+
+  document.querySelectorAll("#modeBar [data-mode]").forEach(b => {
+    b.classList.toggle("on", b.dataset.mode === scoreMode);
+    b.onclick = () => {
+      scoreMode = b.dataset.mode;
+      try { localStorage.setItem(MODE_KEY, scoreMode); } catch (e) {}
+      document.querySelectorAll("#modeBar [data-mode]").forEach(x => x.classList.toggle("on", x === b));
+      render();
+    };
+  });
+  document.getElementById("rangeToggle").onclick = () => { rangeMode = !rangeMode; rangeStart = rangeEnd = null; render(); };
+  // 広い画面では設定欄を開いておき、スマホでは閉じておく
+  document.querySelectorAll("details.fold").forEach(d => { d.open = window.innerWidth > 760; });
+
+  // データの書き出し・読み込み(ブラウザ内の保存データだけを対象にする。通信はしない)
+  const DATA_KEYS = ["yukyu-index-cfg-v1", "yukyu-index-paid-v1", "yukyu-index-company-v1", "yukyu-index-groups-v1", "yukyu-index-mode-v1"];
+  document.getElementById("dataExport").onclick = () => {
+    const data = {};
+    DATA_KEYS.forEach(k => { try { const v = localStorage.getItem(k); if (v !== null) data[k] = v; } catch (e) {} });
+    const url = URL.createObjectURL(new Blob([JSON.stringify({ app: "yukyu-index", data }, null, 2)], { type: "application/json" }));
+    const a = document.createElement("a");
+    a.href = url; a.download = "yukyu-data.json"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    document.getElementById("dataMsg").textContent = "書き出しました(yukyu-data.json)。";
+  };
+  document.getElementById("dataImport").onclick = () => document.getElementById("dataFile").click();
+  document.getElementById("dataFile").onchange = async e => {
+    const msg = document.getElementById("dataMsg"), f = e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    try {
+      const obj = JSON.parse(await f.text());
+      if (!obj || obj.app !== "yukyu-index" || typeof obj.data !== "object") throw new Error("形式が違います");
+      if (!confirm("いまの入力内容を、読み込んだ内容で置き換えます。よろしいですか?")) return;
+      DATA_KEYS.forEach(k => { try { if (typeof obj.data[k] === "string") localStorage.setItem(k, obj.data[k]); else localStorage.removeItem(k); } catch (er) {} });
+      location.reload();
+    } catch (err) { msg.textContent = "読み込めませんでした: このアプリで書き出したファイルを選んでください。"; }
+  };
+
+  document.getElementById("prev").onclick = () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render(); };
+  document.getElementById("next").onclick = () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render(); };
+  // 内訳をテキストでコピー(共有用)
+  const flash = (btn, text) => { const o = btn.dataset.o || (btn.dataset.o = btn.textContent); btn.textContent = text; setTimeout(() => { btn.textContent = o; }, 1800); };
+  document.getElementById("copyTxt").onclick = async e => {
+    const btn = e.currentTarget, blocks = computeBlocks();
+    if (!blocks.length) { flash(btn, "有給が未選択だよ"); return; }
+    const tp = blocks.reduce((s, b) => s + b.paid, 0), to = blocks.reduce((s, b) => s + b.len, 0);
+    const lines = blocks.map(b => `${b.from.getFullYear()}/${fmt(b.from)}〜${fmt(b.to)} ${b.len}連休(有給${b.paid}日・${(b.len / b.paid).toFixed(2)}倍)`);
+    lines.push(`合計: 有給${tp}日で${to}日休み → 効率指数 ${(to / tp).toFixed(2)}倍`);
+    try { await navigator.clipboard.writeText(lines.join("\n")); flash(btn, "コピーしたよ!"); }
+    catch (err) { flash(btn, "コピーできなかったよ"); }
+  };
+  // 選んだ有給をカレンダーアプリ用(.ics)で保存。ファイルはこの端末内で作られ、どこにも送信されない
+  document.getElementById("saveIcs").onclick = e => {
+    const btn = e.currentTarget;
+    if (!paid.size) { flash(btn, "有給が未選択だよ"); return; }
+    const ymd = d => key(d).replace(/-/g, "");
+    const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//yukyu-index//JP", "CALSCALE:GREGORIAN"];
+    [...paid].sort().forEach(k => {
+      const d = parseDate(k);
+      lines.push("BEGIN:VEVENT", `UID:yukyu-${k}@local`, `DTSTAMP:${ymd(today)}T000000Z`,
+        `DTSTART;VALUE=DATE:${ymd(d)}`, `DTEND;VALUE=DATE:${ymd(addDays(d, 1))}`, "SUMMARY:有給休暇", "TRANSP:TRANSPARENT", "END:VEVENT");
+    });
+    lines.push("END:VCALENDAR");
+    const url = URL.createObjectURL(new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url; a.download = "yukyu.ics"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    flash(btn, "保存したよ!");
+  };
+  document.getElementById("clear").onclick = () => {
+    if (paid.size && confirm("選んだ有給をすべてクリアしますか?")) { paid.clear(); save(); render(); }
+  };
+  render();
+})();
+</script>
+</body>
+</html>
